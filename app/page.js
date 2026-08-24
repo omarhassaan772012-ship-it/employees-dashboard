@@ -34,6 +34,7 @@ export default function Dashboard() {
   const [departmentFilter, setDepartmentFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [copiedEmail, setCopiedEmail] = useState("");
 
   const getErrorMessage = async (response) => {
     try {
@@ -105,6 +106,18 @@ export default function Dashboard() {
     setSearchTerm("");
     setDepartmentFilter("");
     setStatusFilter("");
+  };
+
+  const copyEmail = async (event, email) => {
+    event.stopPropagation();
+
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopiedEmail(email);
+      setTimeout(() => setCopiedEmail(""), 1500);
+    } catch {
+      setError("Unable to copy the email address.");
+    }
   };
 
   return (
@@ -179,7 +192,17 @@ export default function Dashboard() {
               <small>{employee.status === "active" ? "active" : "inactive"}</small>
               <h2>{employee.name}</h2>
               <p>{employee.jobTitle} - {employee.department}</p>
-              <p>{employee.email} - {employee.phone}</p>
+              <p>
+                <button
+                  type="button"
+                  className={styles.copyButton}
+                  onClick={(event) => copyEmail(event, employee.email)}
+                  aria-label={`Copy email ${employee.email}`}
+                >
+                  {copiedEmail === employee.email ? "Copied" : employee.email}
+                </button>
+                {" - "}{employee.phone}
+              </p>
             </div>
           </article>
         ))}
@@ -217,7 +240,19 @@ export default function Dashboard() {
 
             <h2 id="employee-details-title">{selectedEmployee.name}</h2>
             <dl className={styles.detailsList}>
-              <div><dt>email</dt><dd>{selectedEmployee.email}</dd></div>
+              <div>
+                <dt>email</dt>
+                <dd>
+                  <button
+                    type="button"
+                    className={styles.copyButton}
+                    onClick={(event) => copyEmail(event, selectedEmployee.email)}
+                    aria-label={`Copy email ${selectedEmployee.email}`}
+                  >
+                    {copiedEmail === selectedEmployee.email ? "Copied" : selectedEmployee.email}
+                  </button>
+                </dd>
+              </div>
               <div><dt>phone number</dt><dd>{selectedEmployee.phone}</dd></div>
               <div><dt>job title</dt><dd>{selectedEmployee.jobTitle}</dd></div>
               <div><dt>department</dt><dd>{selectedEmployee.department}</dd></div>

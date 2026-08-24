@@ -1,5 +1,6 @@
 .dashboard {
   min-height: 100vh;
+  width: 100%;
   padding: 80px 8%;
   background: #f7f7f7;
   color: #111;
@@ -22,12 +23,15 @@
 .form {
   display: grid;
   gap: 15px;
-  max-width: 650px;
+  width: min(100%, 650px);
   margin-bottom: 60px;
 }
 
 .form input,
-.form textarea {
+.form textarea,
+.form select {
+  width: 100%;
+  min-width: 0;
   padding: 15px;
   border: 1px solid #ccc;
   font: inherit;
@@ -38,9 +42,10 @@
   resize: vertical;
 }
 
-.form select,
 .filters input,
 .filters select {
+  width: 100%;
+  min-width: 0;
   padding: 15px;
   border: 1px solid #ccc;
   background: #fff;
@@ -68,7 +73,7 @@
 
 .filters {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(160px, 1fr)) auto;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) auto;
   gap: 12px;
   align-items: center;
   margin-bottom: 12px;
@@ -90,15 +95,18 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  justify-content: center;
+  align-items: center;
   gap: 25px;
 }
 
 .card {
+  min-width: 0;
   background: #fff;
   border: 1px solid #ddd;
   cursor: pointer;
-  width: 280px;
+  width: 100%;
 }
 
 .card:focus-visible {
@@ -110,8 +118,6 @@
   width: 100%;
   height: auto;
   max-height: 420px;
-  max-width: 400px;
-
 }
 
 .card div {
@@ -218,6 +224,19 @@
 }
 
 @media (max-width: 700px) {
+  .dashboard {
+    padding: 32px 16px;
+  }
+
+  .dashboard h1 {
+    margin-bottom: 24px;
+    font-size: 36px;
+  }
+
+  .form {
+    margin-bottom: 40px;
+  }
+
   .filters {
     grid-template-columns: 1fr;
   }
