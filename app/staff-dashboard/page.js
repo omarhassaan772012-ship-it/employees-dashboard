@@ -402,8 +402,8 @@ export default function Dashboard() {
                 >
                   {copiedEmail === employee.email ? "Copied" : employee.email}
                 </button>
-                {" - "}{employee.phone}
               </p>
+              <p>{employee.phone}</p>
               <button
                 disabled={loading || deletingId !== null}
                 onClick={(event) => {

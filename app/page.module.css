@@ -55,6 +55,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  justify-content: center;
+  align-items: center;
   gap: 25px;
 }
 
@@ -95,7 +97,7 @@
   border: 0;
   background: transparent;
   color: inherit;
-  /* cursor: pointer; */
+  cursor: pointer;
   font: inherit;
 }
 
