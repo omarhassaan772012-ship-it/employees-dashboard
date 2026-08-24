@@ -290,6 +290,7 @@ export default function Dashboard() {
         <input
           name="birthDate"
           type="date"
+          placeholder="Birth date"
           aria-label="Birth date"
           value={form.birthDate}
           onChange={handleChange}
