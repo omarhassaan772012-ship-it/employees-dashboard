@@ -6,13 +6,22 @@ import styles from "./page.module.css";
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://employees-dashboard-back-end.vercel.app/api/employees";
 
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 const emptyForm = {
   name: "",
   email: "",
   phone: "",
   jobTitle: "",
   department: "",
-  birthDate: "",
+  birthDate: getTodayDate(),
   status: "active",
   image: null,
 };
