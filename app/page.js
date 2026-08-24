@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/employees";
+  process.env.NEXT_PUBLIC_API_URL || "https://employees-dashboard-back-end.vercel.app/api/employees";
 
 const requestTimeout = 10000;
 
