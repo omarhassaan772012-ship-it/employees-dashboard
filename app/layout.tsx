@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import logo from "./images.ico";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "https://employees-dashboard.vercel.app/og-image.png",
+        url: logo.src,
         width: 1200,
         height: 630,
       },
