@@ -7,9 +7,11 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set('Cache-Control', 'no-store, max-age=0');
+  return response;
 }
 
 export const config = {
-  matcher: '/staff-dashboard/:path*',
+  matcher: ['/', '/staff-dashboard/:path*'],
 };
