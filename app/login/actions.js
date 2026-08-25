@@ -3,27 +3,29 @@
 import { redirect } from 'next/navigation';
 
 const API_URL =
-  process.env.NEXT_PUBLIC_SECURITY_API_URL || "https://employees-dashboard-back-end.vercel.app/api/security";
+  process.env.NEXT_PUBLIC_SECURITY_API_URL || "https://employees-dashboard-back-end.vercel.app/api/security/login";
 
 export async function loginAction(previousState, formData) {
   const email = String(formData.get('email') || '').trim().toLowerCase();
   const password = String(formData.get('password') || '');
 
   try {
-    const response = await fetch(API_URL, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error('Failed to fetch security data');
-    }
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+      cache: 'no-store',
+    });
 
-    const data = await response.json();
-    const securityRecords = data.security || [];
-    const isValid = securityRecords.some(
-      (security) => security.email.toLowerCase() === email && security.password === password,
-    );
-
-    if (isValid) {
+    if (response.ok) {
       redirect('/staff-dashboard');
     }
+
+    if (response.status === 401) {
+      return { error: 'بيانات الدخول غير صحيحة' };
+    }
+
+    throw new Error(`Login request failed with status ${response.status}`);
   } catch (error) {
     if (error?.digest?.startsWith('NEXT_REDIRECT')) {
       throw error;
@@ -31,5 +33,5 @@ export async function loginAction(previousState, formData) {
     console.error('Login error:', error);
   }
 
-  return { error: 'بيانات الدخول غير صحيحة' };
+  return { error: 'تعذر الاتصال بالخادم، حاول مرة أخرى' };
 }
