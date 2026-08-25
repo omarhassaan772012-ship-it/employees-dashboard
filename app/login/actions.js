@@ -20,11 +20,11 @@ export async function loginAction(previousState, formData) {
 
     if (response.ok) {
       const cookieStore = await cookies();
-      cookieStore.set('dashboard_session', 'authenticated', {
+      cookieStore.set('dashboard_session_v2', 'authenticated', {
         httpOnly: true,
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 8,
+        maxAge: 60,
         path: '/',
       });
       redirect('/staff-dashboard');

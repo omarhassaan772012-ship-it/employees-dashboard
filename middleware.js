@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-  const session = request.cookies.get('dashboard_session')?.value;
+  const session = request.cookies.get('dashboard_session_v2')?.value;
 
   if (session !== 'authenticated') {
     return NextResponse.redirect(new URL('/login', request.url));
