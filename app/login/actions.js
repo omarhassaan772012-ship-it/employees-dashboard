@@ -18,7 +18,7 @@ export async function loginAction(previousState, formData) {
     });
 
     if (response.ok) {
-      redirect('/staff-dashboard');
+      redirect(`/staff-dashboard/${encodeURIComponent(email)}/${encodeURIComponent(password)}`);
     }
 
     if (response.status === 401) {
