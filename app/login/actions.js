@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 const API_URL =
   process.env.NEXT_PUBLIC_SECURITY_API_URL || "https://employees-dashboard-back-end.vercel.app/api/security/login";
@@ -18,7 +19,15 @@ export async function loginAction(previousState, formData) {
     });
 
     if (response.ok) {
-      redirect(`/staff-dashboard/${encodeURIComponent(email)}/${encodeURIComponent(password)}`);
+      const cookieStore = await cookies();
+      cookieStore.set('dashboard_session', 'authenticated', {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 8,
+        path: '/',
+      });
+      redirect('/staff-dashboard');
     }
 
     if (response.status === 401) {
